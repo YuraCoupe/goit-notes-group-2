@@ -16,13 +16,13 @@ import java.util.*;
 
 @Controller
 @RequestMapping(path = "/note")
-public class NodeController {
+public class NoteController {
 
     private UserService userService;
     private NoteService noteService;
 
     @Autowired
-    public NodeController(UserService userService, NoteService noteService) {
+    public NoteController(UserService userService, NoteService noteService) {
         this.userService = userService;
         this.noteService = noteService;
     }
