@@ -1,8 +1,8 @@
-package ua.goit.user;
+package ua.goit.group2notes.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.goit.note.NoteConverter;
+import ua.goit.group2notes.note.NoteConverter;
 
 import java.util.stream.Collectors;
 

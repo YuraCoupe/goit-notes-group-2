@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Registration</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2016/bootsnav/bootsnav.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://bootstraptema.ru/plugins/2016/bootsnav/bootsnav.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="col-md-offset-3 col-md-6">
+  <div class="login-register-form">
+    <h2 class="form-signin-heading">Create your account</h2>
+
+
+    <div class="form-group">
+      <label for="username" class="form-label mt-4">Username</label>
+      <input type="text" name="username" class="form-control" id="username"
+             placeholder="Enter username contains only latin symbols">
+    </div>
+    <span class="usernameErrorField" style="color:red"></span>
+
+    <div class="form-group">
+      <label for="password" class="form-label mt-4">Password</label>
+      <input type="text" name="password" class="form-control" id="password"
+             placeholder="Enter password">
+    </div>
+    <span class="passwordErrorField" style="color:red"></span>
+
+    <div class="form-group">
+      <div class="form-label mt-4">
+        <div class="d-grid gap-2">
+          <button class="btn btn-lg btn-primary" onclick="sendToUser()">SIGN UP</button>
+        </div>
+      </div>
+    </div>
+    <h5 class="text-center"><a href="/login">Return to Login page</a>
+    </h5>
+  </div>
+</div>
+</div>
+</body>
+<script src="/js/ValidUser.js"></script>
+</html>
