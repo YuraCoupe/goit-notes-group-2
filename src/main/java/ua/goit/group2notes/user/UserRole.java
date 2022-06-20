@@ -1,4 +1,4 @@
-package ua.goit.user;
+package ua.goit.group2notes.user;
 
 public enum UserRole {
     ROLE_USER("ROLE_USER"),

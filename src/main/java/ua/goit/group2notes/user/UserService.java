@@ -1,9 +1,9 @@
-package ua.goit.user;
+package ua.goit.group2notes.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ua.goit.errorHandling.UserAlreadyExistsException;
+import ua.goit.group2notes.errorHandling.UserAlreadyExistsException;
 
 @Service
 public class UserService {

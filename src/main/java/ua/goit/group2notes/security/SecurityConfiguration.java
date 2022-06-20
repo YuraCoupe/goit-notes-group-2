@@ -1,4 +1,4 @@
-package ua.goit.security;
+package ua.goit.group2notes.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ua.goit.user.UsersDetailsService;
+import ua.goit.group2notes.user.UsersDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -47,8 +47,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return authenticationManager();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(usersDetailsService).passwordEncoder(passwordEncoder());
     }
 

@@ -1,4 +1,4 @@
-package ua.goit.security;
+package ua.goit.group2notes.security;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

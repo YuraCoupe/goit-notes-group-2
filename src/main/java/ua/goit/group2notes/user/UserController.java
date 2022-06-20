@@ -1,4 +1,4 @@
-package ua.goit.user;
+package ua.goit.group2notes.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ua.goit.errorHandling.UserAlreadyExistsException;
+import ua.goit.group2notes.errorHandling.UserAlreadyExistsException;
 
 import javax.validation.Valid;
 
