@@ -1,4 +1,4 @@
-package ua.goit.note;
+package ua.goit.group2notes.note;
 
 import org.springframework.stereotype.Service;
 

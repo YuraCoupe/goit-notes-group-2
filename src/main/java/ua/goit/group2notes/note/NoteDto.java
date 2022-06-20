@@ -1,6 +1,6 @@
-package ua.goit.note;
+package ua.goit.group2notes.note;
 
-import ua.goit.user.UserDto;
+import ua.goit.group2notes.user.UserDto;
 
 import javax.validation.constraints.Size;
 import java.util.UUID;

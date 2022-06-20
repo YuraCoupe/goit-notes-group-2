@@ -1,24 +1,15 @@
-package ua.goit.note;
+package ua.goit.group2notes.note;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.goit.errorHandling.TitleAlreadyExistsException;
-import ua.goit.user.UserDao;
-import ua.goit.user.UserDto;
-import ua.goit.user.UserService;
+//import ua.goit.errorHandling.TitleAlreadyExistsException;
 
-import java.util.*;
 
 @Controller
 @RequestMapping(path = "/note")
 public class NoteController {
 
-    private UserService userService;
+    /*private UserService userService;
     private NoteService noteService;
 
     @Autowired
@@ -98,4 +89,6 @@ public class NoteController {
         }
         return "noteShare";
     }
+
+     */
 }

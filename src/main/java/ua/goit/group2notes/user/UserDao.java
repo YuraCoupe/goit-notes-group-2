@@ -1,22 +1,25 @@
-package ua.goit.user;
+package ua.goit.group2notes.user;
 
-import ua.goit.note.NoteDto;
+import ua.goit.group2notes.note.NoteDao;
 
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
 
-public class UserDto {
+@Entity
+@Table(name = "users")
+public class UserDao {
     private UUID id;
     private String username;
     private String password;
     private UserRole userRole;
-    private Set<NoteDto> notes;
+    private Set<NoteDao> notes;
 
-    public UserDto() {
+    public UserDao() {
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public UUID getId() {
         return id;
     }
@@ -25,9 +28,7 @@ public class UserDto {
         this.id = id;
     }
 
-//    @NotEmpty(message = "Please, enter Username")
-    @Size(min = 5, max = 50, message = "Username must be minimum 5 characters long and no longer then 50")
-    @Pattern(regexp = "[a-zA-Z0-9]*", message = "Username must contains only letters or/and digits")
+    @Column(name = "username", nullable = false, unique = true)
     public String getUsername() {
         return username;
     }
@@ -36,8 +37,7 @@ public class UserDto {
         this.username = username;
     }
 
-//    @NotEmpty(message = "Please, enter Password")
-    @Size(min = 8, max = 100, message = "Password must be minimum 8 characters long and no longer then 100")
+    @Column(name = "password", nullable = false)
     public String getPassword() {
         return password;
     }
@@ -46,6 +46,8 @@ public class UserDto {
         this.password = password;
     }
 
+    @Column(name = "user_role", nullable = false)
+    @Enumerated(EnumType.STRING)
     public UserRole getUserRole() {
         return userRole;
     }
@@ -54,11 +56,12 @@ public class UserDto {
         this.userRole = userRole;
     }
 
-    public Set<NoteDto> getNotes() {
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    public Set<NoteDao> getNotes() {
         return notes;
     }
 
-    public void setNotes(Set<NoteDto> notes) {
+    public void setNotes(Set<NoteDao> notes) {
         this.notes = notes;
     }
 }
