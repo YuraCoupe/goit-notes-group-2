@@ -1,4 +1,4 @@
-package ua.goit.user;
+package ua.goit.group2notes.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

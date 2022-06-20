@@ -1,6 +1,6 @@
-package ua.goit.note;
+package ua.goit.group2notes.note;
 
-import ua.goit.user.UserDao;
+import ua.goit.group2notes.user.UserDao;
 
 import javax.persistence.*;
 import java.util.UUID;
