@@ -1,8 +1,11 @@
-package ua.goit.note;
+package ua.goit.group2notes.note;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.goit.errorHandling.TitleNotFoundException;
+import ua.goit.group2notes.note.NoteConverter;
+import ua.goit.group2notes.note.NoteDto;
+import ua.goit.group2notes.note.NoteRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,9 +36,9 @@ public class NoteService {
     }
 
 
-    public List<NoteDto> getListNotes(UUID uuid) {
+    public List<NoteDto> getListNotes(UUID id) {
 
-        return StreamSupport.stream(noteRepository.findNoteByUserId(uuid).spliterator(), false)
+        return StreamSupport.stream(noteRepository.findNoteByUserId(id).spliterator(), false)
                 .map(noteConverter::convert)
                 .collect(Collectors.toList());
 

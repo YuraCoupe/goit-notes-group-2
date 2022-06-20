@@ -1,50 +1,38 @@
-<!DOCTYPE html>
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Registration</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2016/bootsnav/bootsnav.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://bootstraptema.ru/plugins/2016/bootsnav/bootsnav.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="/css/style.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+  <title th:utext="#{label.pages.home.title}">Title</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css" rel="stylesheet">
 </head>
-<body>
-<div class="container">
-  <div class="col-md-offset-3 col-md-6">
-  <div class="login-register-form">
-    <h2 class="form-signin-heading">Create your account</h2>
 
+<body class="text-center">
+<form class="form-signin" action="/proccess-login" method="POST" th:object="${user}" enctype="utf8">
+  <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 
-    <div class="form-group">
-      <label for="username" class="form-label mt-4">Username</label>
-      <input type="text" name="username" class="form-control" id="username"
-             placeholder="Enter username contains only latin symbols">
-    </div>
-    <span class="usernameErrorField" style="color:red"></span>
-
-    <div class="form-group">
-      <label for="password" class="form-label mt-4">Password</label>
-      <input type="text" name="password" class="form-control" id="password"
-             placeholder="Enter password">
-    </div>
-    <span class="passwordErrorField" style="color:red"></span>
-
-    <div cass="form-group">
-      <div class="form-label mt-4">
-        <div class="d-grid gap-2">
-          <button class="btn btn-lg btn-primary" onclick="sendToUser()">SIGN UP</button>
-        </div>
-      </div>
-    </div>
-    <h5 class="text-center"><a href="/login">Return to Login page</a>
-    </h5>
+  <div th:if="${message != null}" class="alert alert-info" th:utext="${message}"></div>
+  <div th:if="${error != null}" class="alert alert-info" th:utext="${error}"></div>
+    <label class="sr-only" th:utext="#{label.form.loginEmail}">Email address</label>
+    <input type="text" id="email" name="email" class="form-control" placeholder="Email address" required autofocus>
+    <label class="sr-only" th:utext="#{label.form.loginPass}">Password</label>
+    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <h4 class="text-center"><a href="${pageContext.request.contextPath}/users/new">Create an account</a></h4>
   </div>
-</div>
-</div>
+</form>
 </body>
-<script src="/js/ValidUser.js"></script>
 </html>
