@@ -22,9 +22,11 @@ public class UserConverter {
         dto.setUsername(dao.getUsername());
         dto.setPassword(dao.getPassword());
         dto.setUserRole(dao.getUserRole());
-        dto.setNotes(dao.getNotes().stream()
-                .map(noteConverter::convert)
-                .collect(Collectors.toSet()));
+        if (dao.getNotes() != null) {
+            dto.setNotes(dao.getNotes().stream()
+                    .map(noteConverter::convert)
+                    .collect(Collectors.toSet()));
+        }
         return dto;
     }
 
@@ -34,9 +36,11 @@ public class UserConverter {
         dao.setUsername(dto.getUsername());
         dao.setPassword(dto.getPassword());
         dao.setUserRole(dto.getUserRole());
-        dao.setNotes(dto.getNotes().stream()
-                .map(noteConverter::convert)
-                .collect(Collectors.toSet()));
+        if (dto.getNotes() != null) {
+            dao.setNotes(dto.getNotes().stream()
+                    .map(noteConverter::convert)
+                    .collect(Collectors.toSet()));
+        }
         return dao;
     }
 }
