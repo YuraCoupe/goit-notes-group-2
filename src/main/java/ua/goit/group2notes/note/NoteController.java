@@ -1,15 +1,26 @@
 package ua.goit.group2notes.note;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ua.goit.group2notes.errorHandling.TitleAlreadyExistsException;
+import ua.goit.group2notes.user.UserDao;
+import ua.goit.group2notes.user.UserDto;
+import ua.goit.group2notes.user.UserService;
+
+import java.util.*;
 //import ua.goit.errorHandling.TitleAlreadyExistsException;
 
 
 @Controller
-@RequestMapping(path = "/note")
+@RequestMapping(path = "/notes")
 public class NoteController {
 
-    /*private UserService userService;
+    private UserService userService;
     private NoteService noteService;
 
     @Autowired
@@ -21,24 +32,24 @@ public class NoteController {
 
     @GetMapping("/list")
     public String getNotes(Authentication authentication, Map<String, Object> model) {
-        List<NoteDto> all = noteService.getAll();
+        //List<NoteDto> notes = noteService.getAll();
         UserDto userDto = userService.findUserByUsername(authentication.getName());
-        List<NoteDto> listNotes = noteService.getListNotes(userDto.getId());
-        model.put("userNote", listNotes);
-        model.put("AllNote", all);
-        return "noteList";
+        List<NoteDto> userNotes = noteService.getListNotes(userDto.getId());
+        //model.put("userNotes", userNotes);
+        model.put("notes", userNotes);
+        return "notes";
     }
 
     @GetMapping("/create")
     public String noteCreate(Map<String, Object> model) {
 
-        return "noteCreate";
+        return "note";
     }
 
     @PostMapping("/create")
     public String noteAdd(Authentication authentication, @ModelAttribute("node") NoteDto noteDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "noteCreate";
+            return "note";
         }
        try {
            UserDto userDto = userService.findUserByUsername(authentication.getName());
@@ -46,9 +57,9 @@ public class NoteController {
            noteService.createNote(noteDto);
        }catch (TitleAlreadyExistsException ex){
            model.addAttribute("message", ex.getMessage());
-           return "noteCreate";
+           return "create";
        }
-        return "redirect:/note/list";
+        return "redirect:/notes/list";
     }
 
     @GetMapping("/edit/{id}")
@@ -56,7 +67,7 @@ public class NoteController {
 
         NoteDto noteDto = noteService.findById(id);
         model.put("note", noteDto);
-        return "noteEdit";
+        return "note";
     }
 
     @PostMapping("/edit/{id}")
@@ -67,7 +78,7 @@ public class NoteController {
         note.setText(noteDto.getText());
         note.setAccessType(noteDto.getAccessType());
         noteService.createNote(note);
-        return "redirect:/note/list";
+        return "redirect:/notes/list";
 
     }
 
@@ -75,7 +86,7 @@ public class NoteController {
     public String deleteNote(@PathVariable UUID id) {
 
         noteService.delete(id);
-        return "redirect:/note/list";
+        return "redirect:/notes/list";
 
     }
     @GetMapping("share/{id}")
@@ -89,6 +100,4 @@ public class NoteController {
         }
         return "noteShare";
     }
-
-     */
 }
