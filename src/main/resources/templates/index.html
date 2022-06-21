@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.thymeleaf.org ">
-<!--Import head with styles and script-->
-<head th:include="fragments :: head">
-    <title id="pageTitle">GOIT notes</title>
+
+<head th:insert="header">
 </head>
-<body>
-<!--Import navigation bar-->
-<div th:replace="fragments :: navibar"></div>
-<figure class="text-center">
-    <blockquote class="blockquote">
-        <h1>Welcome to Notes Application</h1>
-    </blockquote>
-</figure>
-</body>
+    <body>
+        <span th:insert="navibar::navibar"></span>
+            <h1>Welcome to Notes Application</h1>
+        </div>
+    </body>
 </html>
