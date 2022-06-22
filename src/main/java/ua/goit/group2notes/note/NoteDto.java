@@ -2,6 +2,7 @@ package ua.goit.group2notes.note;
 
 import ua.goit.group2notes.user.UserDto;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.UUID;
 
@@ -43,6 +44,7 @@ public class NoteDto {
         this.text = text;
     }
 
+    @NotNull
     public NoteAccessType getAccessType() {
         return accessType;
     }

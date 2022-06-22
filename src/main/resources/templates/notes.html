@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+
+<head th:insert="header">
+</head>
+<body>
+    <span th:insert="navibar::navibar"></span>
+        <div class="container">
+            <form action="/notes/edit">
+                <div class="form-group">
+                    <label for="Id">Note name:</label><br>
+                    <select class="form-control" id="id" name="id">
+                        <option disabled selected value> -- select note -- </option>
+                        <option th:each="note : ${notes}" th:value="${note.id}" th:text="${note.title}"></option>
+                    </select>
+                </div>
+                    <input type="submit" value="Search">
+            </form><br>
+
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group me-2" role="group" aria-label="Second group">
+                   <a href="/notes/create" type="button" class="btn btn-primary">New</a>
+                </div>
+            </div>
+            <div>
+                <span th:if="${errorMessage!=null and !errorMessage.empty}">
+                    <p th:each="error: ${errorMessage.errors}">
+                        <p style="color:red" th:text="${error}"></p>
+                    </p>
+                </span>
+            </div>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td>id</td>
+                        <td>Title</td>
+                        <td>Text</td>
+                        <td>AccessType</td>
+                        <td>User</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="note: ${notes}">
+                        <td th:text="${note.id}"/>
+                        <td th:text="${note.title}"/>
+                        <td th:text="${note.text}"/>
+                        <td th:text="${note.accessType.type}"/>
+                        <td>
+                            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                <div class="btn-group me-2" role="group" aria-label="Second group">
+                                     <a th:href="@{/notes/edit/{id}(id=${note.id})}" type="button" class="btn btn-warning">Edit</a>
+                                     <a th:href="@{/notes/delete/{id}(id=${note.id})}" type="button" class="btn btn-danger">Remove</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
