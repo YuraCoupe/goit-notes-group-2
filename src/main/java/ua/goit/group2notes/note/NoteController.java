@@ -100,6 +100,6 @@ public class NoteController {
         } else {
             model.put("message", Collections.singletonList("We can't find this note "));
         }
-        return "noteShare";
+        return "sharednote";
     }
 }

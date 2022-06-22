@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+
+<head th:insert="header">
+</head>
+<body>
+        <div class="panel panel-warning" style="width:min-content; margin-top:1%; margin-left:auto; margin-right:auto">
+            <div class="panel-heading">
+                <h3 class="panel-title" th:text="Error"></h3>
+            </div>
+            <div class="panel-body" th:text="This note doesn't exist">
+            </div>
+        </div>
+    </body>
+</html>
