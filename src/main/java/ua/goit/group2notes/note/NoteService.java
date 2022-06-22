@@ -2,63 +2,65 @@ package ua.goit.group2notes.note;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.goit.group2notes.errorHandling.TitleNotFoundException;
-import ua.goit.group2notes.note.NoteConverter;
-import ua.goit.group2notes.note.NoteDto;
-import ua.goit.group2notes.note.NoteRepository;
+import ua.goit.group2notes.errorHandling.TitleAlreadyExistsException;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class NoteService {
-    private NoteRepository noteRepository;
-    private NoteConverter noteConverter;
 
+
+  private   NodeRepository noteRepository;
+ private    NoteConverter converter;
     @Autowired
-    public NoteService(NoteRepository noteRepository, NoteConverter noteConverter) {
+    public NoteService(NodeRepository noteRepository, NoteConverter converter) {
         this.noteRepository = noteRepository;
-        this.noteConverter = noteConverter;
+        this.converter = converter;
+    }
+    public List<NoteDto> getListNotes(UUID uuid) {
+        List<NoteDao> listNotes = noteRepository.findByUserId(uuid);
+        return listNotes.stream().map(n -> converter.convert(n)).collect(Collectors.toList());
+
+
+    }
+
+    public List<NoteDto> getAll() {
+
+        List<NoteDao> all = noteRepository.findAll();
+
+        return all.stream().map(p->converter.convert(p)).collect(Collectors.toList());
+
     }
 
     public void createNote(NoteDto noteDto) {
-        noteRepository.save(noteConverter.convert(noteDto));
+        validateToCreateNote( noteDto);
+        noteRepository.save(converter.convert(noteDto));
     }
-
-
-    public List<NoteDto> getAll() {
-        return StreamSupport.stream(noteRepository.findAll().spliterator(), false)
-                .map(noteConverter::convert)
-                .collect(Collectors.toList());
-    }
-
-
-    public List<NoteDto> getListNotes(UUID id) {
-
-        return StreamSupport.stream(noteRepository.findNoteByUserId(id).spliterator(), false)
-                .map(noteConverter::convert)
-                .collect(Collectors.toList());
-
-    }
-
 
     public NoteDto findById(UUID uuid) {
-
-        return noteConverter.convert(noteRepository.findById(uuid).orElseThrow(() ->
-                new TitleNotFoundException(String.format("Title with id %s  not exists", uuid))));
-
+        NoteDao noteDao = noteRepository.findById(uuid)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + uuid));
+        return converter.convert(noteDao);
     }
 
     public void delete(UUID uuid) {
         noteRepository.deleteById(uuid);
     }
+    public  Optional<NoteDao> findByIdOptional(String uuid){
 
-    public Optional<NoteDao> findByIdOptional(UUID uuid) {
-        return noteRepository.findById(uuid);
+            return noteRepository.findById(UUID.fromString(uuid));
+
+
     }
-
-
+    public void validateToCreateNote(NoteDto noteDto) {
+         NoteDao note = converter.convert(noteDto);
+         noteRepository.findByTitle(note.getTitle())
+                .ifPresent((title) -> {
+                    throw new TitleAlreadyExistsException("Title with username " +title.getTitle()+
+                            " already exists");
+                });
+    }
 }
