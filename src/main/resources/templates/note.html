@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group me-2" role="group" aria-label="Second group">
-                        <a href="/products" type="button" class="btn btn-success">Back to products</a>
+                        <a href="/notes/list" type="button" class="btn btn-success">Back to notes</a>
                     </div>
                 </div>
             </div><br>
@@ -18,7 +18,7 @@
             <div class="form-group">
                 <div class="row">
                     <label >Note ID</label>
-                    <input th:field="*{id}" type="UUID" readonly="true" class="form-control" id="id" placeholder="Note ID"/>
+                    <input th:field="*{id}" type="text" readonly="true" class="form-control" id="id" placeholder="Note ID"/>
                     <br>
                     <label >Title</label>
                     <input th:field="*{title}" type="text" class="form-control" id="title" placeholder="Title"/>
