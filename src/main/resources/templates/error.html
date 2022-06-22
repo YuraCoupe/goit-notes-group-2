@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<!--Import head with styles and script-->
-<head th:include="fragments :: head">
-    <title id="pageTitle">Error</title>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+
+<head th:insert="header">
 </head>
 <body>
-<!--Import navigation bar-->
-<div th:replace="fragments :: navibar"></div>
+<span th:insert="navibar::navibar"></span>
 <br>
 <div class="alert alert-secondary" role="alert" th:text="${errorMsg}"></div>
 

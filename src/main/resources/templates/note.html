@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+
+<head th:insert="header">
+</head>
+<body>
+<span th:insert="navibar::navibar"></span>
+        <div class="container">
+            <div class="row">
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group me-2" role="group" aria-label="Second group">
+                        <a href="/products" type="button" class="btn btn-success">Back to products</a>
+                    </div>
+                </div>
+            </div><br>
+        <form action="/notes" th:object="${note}" method="post" modelAttribute="note">
+            <div class="form-group">
+                <div class="row">
+                    <label >Note ID</label>
+                    <input th:field="*{id}" type="UUID" readonly="true" class="form-control" id="id" placeholder="Note ID"/>
+                    <br>
+                    <label >Title</label>
+                    <input th:field="*{title}" type="text" class="form-control" id="title" placeholder="Title"/>
+                    <p th:each="error: ${#fields.errors('title')}"
+                       th:text="${error}" class="error">Validation error</p>
+                    <br>
+                    <label>Content</label>
+                    <textarea th:field="*{text}" type="text" class="form-control" id="text" placeholder="Text" rows="7"/>
+                    <p th:each="error : ${#fields.errors('text')}"
+                       th:text="${error}" class="error">Validation error</p>
+                    <br>
+                    <label>Access type</label>
+                    <select th:field="*{accessType}" class="form-control" id="accessType" name="accessType">
+                        <option value=""> -- select access type -- </option>
+                        <option th:each="value : ${T(ua.goit.group2notes.note.NoteAccessType).values()}"
+                                th:value="${value}" th:text="${value}"></option>
+                    </select>
+                    <p th:each="error : ${#fields.errors('accessType')}"
+                       th:text="${error}" class="error">Validation error</p>
+                    <br>
+                </div>
+                <div class="row">
+                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group me-2" role="group" aria-label="Second group">
+                            <button type="submit" value="Submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        </div>
+    </body>
+</html>

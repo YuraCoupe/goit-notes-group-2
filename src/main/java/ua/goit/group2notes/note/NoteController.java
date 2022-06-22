@@ -12,6 +12,7 @@ import ua.goit.group2notes.user.UserDao;
 import ua.goit.group2notes.user.UserDto;
 import ua.goit.group2notes.user.UserService;
 
+import javax.validation.Valid;
 import java.util.*;
 //import ua.goit.errorHandling.TitleAlreadyExistsException;
 
@@ -41,24 +42,24 @@ public class NoteController {
     }
 
     @GetMapping("/create")
-    public String noteCreate(Map<String, Object> model) {
-
+    public String noteCreate(Model model) {
+        model.addAttribute("note", new NoteDto());
         return "note";
     }
 
-    @PostMapping("/create")
-    public String noteAdd(Authentication authentication, @ModelAttribute("node") NoteDto noteDto, BindingResult bindingResult, Model model) {
+    @RequestMapping(method = RequestMethod.POST)
+    public String noteAdd(Authentication authentication, @ModelAttribute("note") @Valid NoteDto noteDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "note";
         }
-       try {
-           UserDto userDto = userService.findUserByUsername(authentication.getName());
-           noteDto.setUser(userDto);
-           noteService.createNote(noteDto);
-       }catch (TitleAlreadyExistsException ex){
-           model.addAttribute("message", ex.getMessage());
-           return "create";
-       }
+        try {
+            UserDto userDto = userService.findUserByUsername(authentication.getName());
+            noteDto.setUser(userDto);
+            noteService.createNote(noteDto);
+        } catch (TitleAlreadyExistsException ex) {
+            model.addAttribute("message", ex.getMessage());
+            return "note";
+        }
         return "redirect:/notes/list";
     }
 
@@ -89,11 +90,12 @@ public class NoteController {
         return "redirect:/notes/list";
 
     }
+
     @GetMapping("share/{id}")
-    public String noteShow(@AuthenticationPrincipal UserDao user, @PathVariable ("id")UUID id, Map<String,Object> model){
-         Optional<NoteDao> note = noteService.findByIdOptional(id);
-        if ((note.isPresent() && (user!=null)) ||
-                (user == null && note.get().getAccessType().equals(NoteAccessType.PUBLIC))){
+    public String noteShow(@AuthenticationPrincipal UserDao user, @PathVariable("id") UUID id, Map<String, Object> model) {
+        Optional<NoteDao> note = noteService.findByIdOptional(id);
+        if ((note.isPresent() && (user != null)) ||
+                (user == null && note.get().getAccessType().equals(NoteAccessType.PUBLIC))) {
             model.put("note", note.get());
         } else {
             model.put("message", Collections.singletonList("We can't find this note "));
