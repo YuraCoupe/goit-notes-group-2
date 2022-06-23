@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface NodeRepository extends JpaRepository<NoteDao, UUID> {
+public interface NoteRepository extends JpaRepository<NoteDao, UUID> {
 
     @Query("SELECT c FROM NoteDao c WHERE (c.user.id=?1)")
     List<NoteDao> findByUserId(UUID uuid);

@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 public class NoteService {
 
 
-    private NodeRepository noteRepository;
+    private NoteRepository noteRepository;
     private NoteConverter converter;
 
     @Autowired
-    public NoteService(NodeRepository noteRepository, NoteConverter converter) {
+    public NoteService(NoteRepository noteRepository, NoteConverter converter) {
         this.noteRepository = noteRepository;
         this.converter = converter;
     }
