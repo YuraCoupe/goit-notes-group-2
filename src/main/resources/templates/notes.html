@@ -7,7 +7,7 @@
 <body>
     <span th:insert="navibar::navibar"></span>
         <div class="container">
-            <form action="/notes/edit">
+            <form action="/note/edit">
                 <div class="form-group">
                     <label for="Id">Note name:</label><br>
                     <select class="form-control" id="id" name="id">
@@ -20,7 +20,7 @@
 
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="btn-group me-2" role="group" aria-label="Second group">
-                   <a href="/notes/create" type="button" class="btn btn-primary">New</a>
+                   <a href="/note/create" type="button" class="btn btn-primary">New</a>
                 </div>
             </div>
             <div>
@@ -45,14 +45,14 @@
                 <tbody>
                     <tr th:each="note: ${notes}">
                         <td th:text="${note.id}"/>
-                        <td th:text="${note.title}"/>
-                        <td th:text="${note.text}"/>
+                        <td th:text="${note.title}" style="max-width:7em"/>
+                        <td th:text="${note.text}" style="max-width:30em"/>
                         <td th:text="${note.accessType.type}"/>
                         <td>
                             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                                 <div class="btn-group me-2" role="group" aria-label="Second group">
-                                    <a th:href="@{/notes/edit/{id}(id=${note.id})}" type="button" class="btn btn-warning">Edit</a>
-                                    <a th:href="@{/notes/delete/{id}(id=${note.id})}" type="button" class="btn btn-danger">Remove</a>
+                                    <a th:href="@{/note/edit/{id}(id=${note.id})}" type="button" class="btn btn-warning">Edit</a>
+                                    <a th:href="@{/note/delete/{id}(id=${note.id})}" type="button" class="btn btn-danger">Remove</a>
                                     <button class="copyButton btn btn-info">Share</button>
                                     <input class="linkToCopy" th:value="${share}+${note.id}" style="position: absolute; z-index: -999; opacity: 0;" />
                                 </div>

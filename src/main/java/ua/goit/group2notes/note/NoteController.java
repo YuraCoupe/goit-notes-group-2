@@ -34,28 +34,28 @@ public class NoteController {
 
     @GetMapping("/list")
     public String getNotes(Authentication authentication, Map<String, Object> model, HttpServletRequest request) {
-        List<NoteDto> all = noteService.getAll();
+        //List<NoteDto> all = noteService.getAll();
         UserDto userDto = userService.findUserByUsername(authentication.getName());
-        List<NoteDto> listNotes = noteService.getListNotes(userDto.getId());
-        model.put("userNote", listNotes);
-        model.put("AllNote", all);
-        String s = request.getRequestURL().toString();
-        String replace = s.replace("list", "share/");
-        model.put("share", replace);
+        List<NoteDto> notes = noteService.getListNotes(userDto.getId());
+        model.put("notes", notes);
+        //model.put("allNotes", all);
+        String requestUrl = request.getRequestURL().toString();
+        String shareUrl = requestUrl.replace("list", "share/");
+        model.put("share", shareUrl);
 
-        return "noteList";
+        return "notes";
     }
 
     @GetMapping("/create")
     public String noteCreate(Model model) {
-        model.addAttribute("login", new NoteDto());
-        return "noteCreate";
+        model.addAttribute("note", new NoteDto());
+        return "note";
     }
 
-    @PostMapping("/create")
-    public String noteAdd(Authentication authentication, @ModelAttribute("noteDto")@Valid NoteDto noteDto, BindingResult bindingResult, Model model) {
+    @RequestMapping(method = RequestMethod.POST)
+    public String noteAdd(Authentication authentication, @ModelAttribute("note")@Valid NoteDto noteDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "noteCreate";
+            return "note";
         }
         try {
             UserDto userDto = userService.findUserByUsername(authentication.getName());
@@ -63,7 +63,7 @@ public class NoteController {
             noteService.createNote(noteDto);
         } catch (TitleAlreadyExistsException ex) {
             model.addAttribute("message", ex.getMessage());
-            return "noteCreate";
+            return "note";
         }
         return "redirect:/note/list";
     }
@@ -73,10 +73,10 @@ public class NoteController {
 
         NoteDto noteDto = noteService.findById(id);
         model.put("note", noteDto);
-        return "noteEdit";
+        return "note";
     }
 
-    @PostMapping("/edit/{id}")
+    /*@PostMapping("/edit/{id}")
     public String notePostEdit(@PathVariable("id") UUID id, @ModelAttribute("note") @Valid NoteDto noteDto, BindingResult bindingResult,Map<String, Object> model) {
 
         NoteDto note = noteService.findById(id);
@@ -91,6 +91,7 @@ public class NoteController {
         return "redirect:/note/list";
 
     }
+     */
 
     @GetMapping("delete/{id}")
     public String deleteNote(@PathVariable UUID id) {
@@ -100,6 +101,7 @@ public class NoteController {
 
     }
 
+
     @GetMapping("share/{id}")
     public String noteShow(Authentication authentication, @PathVariable String id, Map<String, Object> model) {
         final Optional<NoteDao> note;
@@ -107,21 +109,22 @@ public class NoteController {
             note = noteService.findByIdOptional(id);
         } catch (IllegalArgumentException ex) {
             model.put("message", "link entered incorrectly");
-            return "noteShare";
+            return "errornote";
         }
-
 
         if ((note.isPresent() && (authentication != null)) ||
                 (authentication == null && note.isPresent())) {
             if (note.get().getAccessType().equals(NoteAccessType.PUBLIC)) {
-                model.put("note", note.get().getText());
+                model.put("note", note.get());
+                return "sharednote";
             } else {
                 model.put("message", "We can't find this note ");
+                return "errornote";
             }
         } else {
             model.put("message", "We can't find this note ");
+            return "errornote";
         }
-        return "sharednote";
     }
 
     @ModelAttribute

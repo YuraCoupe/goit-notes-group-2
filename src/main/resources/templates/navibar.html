@@ -15,8 +15,8 @@
                            <li sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"><a href="/">Home</a></li>
                            <li sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="/notes">Notes<span class="caret"></span></a>
                                <ul class="dropdown-menu">
-                                   <li><a href="/notes/list">Find</a></li>
-                                   <li><a href="/notes/create">New</a></li>
+                                   <li><a href="/note/list">Find</a></li>
+                                   <li><a href="/note/create">New</a></li>
                                </ul>
                            </li>
                            <li sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="/users">Users<span class="caret"></span></a>
@@ -28,7 +28,7 @@
                    </ul>
                    <ul class="nav navbar-nav navbar-right">
                        <li>
-                           <a style="float: right" href="/logout">Logout</a>
+                           <a sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" style="float: right" href="/logout">Logout</a>
                        </li>
                    </ul>
                </div>
