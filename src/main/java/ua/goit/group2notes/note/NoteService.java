@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.goit.group2notes.errorHandling.TitleAlreadyExistsException;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -13,13 +14,15 @@ import java.util.stream.Collectors;
 public class NoteService {
 
 
-  private   NodeRepository noteRepository;
- private    NoteConverter converter;
+    private NodeRepository noteRepository;
+    private NoteConverter converter;
+
     @Autowired
     public NoteService(NodeRepository noteRepository, NoteConverter converter) {
         this.noteRepository = noteRepository;
         this.converter = converter;
     }
+
     public List<NoteDto> getListNotes(UUID uuid) {
         List<NoteDao> listNotes = noteRepository.findByUserId(uuid);
         return listNotes.stream().map(n -> converter.convert(n)).collect(Collectors.toList());
@@ -31,12 +34,12 @@ public class NoteService {
 
         List<NoteDao> all = noteRepository.findAll();
 
-        return all.stream().map(p->converter.convert(p)).collect(Collectors.toList());
+        return all.stream().map(p -> converter.convert(p)).collect(Collectors.toList());
 
     }
 
     public void createNote(NoteDto noteDto) {
-        validateToCreateNote( noteDto);
+        validateToCreateNote(noteDto);
         noteRepository.save(converter.convert(noteDto));
     }
 
@@ -49,18 +52,19 @@ public class NoteService {
     public void delete(UUID uuid) {
         noteRepository.deleteById(uuid);
     }
-    public  Optional<NoteDao> findByIdOptional(String uuid){
 
-            return noteRepository.findById(UUID.fromString(uuid));
+    public Optional<NoteDao> findByIdOptional(String uuid) {
+
+        return noteRepository.findById(UUID.fromString(uuid));
 
 
     }
+
     public void validateToCreateNote(NoteDto noteDto) {
-         NoteDao note = converter.convert(noteDto);
-         noteRepository.findByTitle(note.getTitle())
-                .ifPresent((title) -> {
-                    throw new TitleAlreadyExistsException("Title with username " +title.getTitle()+
-                            " already exists");
-                });
+        NoteDao note = converter.convert(noteDto);
+        Optional<NoteDao> noteFromDb = noteRepository.findByTitle(note.getTitle());
+        if (noteFromDb.isPresent() & Objects.isNull(note.getTitle())) {
+            throw new TitleAlreadyExistsException("Title with username " + note.getTitle() + " already exists");
+        }
     }
 }

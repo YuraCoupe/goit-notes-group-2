@@ -26,8 +26,8 @@
 
   <div th:if="${message != null}" class="alert alert-info" th:utext="${message}"></div>
   <div th:if="${error != null}" class="alert alert-info" th:utext="${error}"></div>
-    <label class="sr-only" th:utext="#{label.form.loginEmail}">Username</label>
-    <input type="text" id="email" name="email" class="form-control" placeholder="Email address" required autofocus>
+    <label class="sr-only" th:utext="#{label.form.loginUsername}">Username</label>
+    <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
     <label class="sr-only" th:utext="#{label.form.loginPass}">Password</label>
     <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
