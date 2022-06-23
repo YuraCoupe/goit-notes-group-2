@@ -69,9 +69,18 @@ public class NoteController {
     }
 
     @GetMapping("/edit/{id}")
-    public String nodeEdit(@PathVariable("id") UUID id, Map<String, Object> model) {
+    public String noteEdit(@PathVariable("id") UUID id, Map<String, Object> model) {
 
         NoteDto noteDto = noteService.findById(id);
+        model.put("note", noteDto);
+        return "note";
+    }
+
+    @GetMapping("/edit")
+    public String noteEditWithParameter(@RequestParam("id") String id, Map<String, Object> model) {
+
+        UUID uuid = UUID.fromString(id);
+        NoteDto noteDto = noteService.findById(uuid);
         model.put("note", noteDto);
         return "note";
     }
