@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+
+<head th:insert="header">
+</head>
+<body>
+<span th:insert="navibar::navibar"></span>
+<div class="container">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <td>id</td>
+            <td>User</td>
+            <td>Password</td>
+            <td>userRole</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user: ${users}">
+            <td th:text="${user.id}"/>
+            <td th:text="${user.name}"/>
+            <td th:text="${user.password}"/>
+            <td th:text="${user.userRole}"/>
+            <td>
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group me-2" role="group" aria-label="Second group">
+                        <a th:href="@{/users/delete/{id}(id=${user.id})}" type="button" class="btn btn-danger">Remove</a>
+                        <button class="copyButton btn btn-info">Share</button>
+                        <input class="linkToCopy" th:value="${share}+${note.id}" style="position: absolute; z-index: -999; opacity: 0;" />
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
