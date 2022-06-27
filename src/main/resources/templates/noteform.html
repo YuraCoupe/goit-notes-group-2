@@ -17,13 +17,14 @@
         <form action="/note" th:object="${note}" method="post" modelAttribute="note">
             <div class="form-group">
                 <div class="row">
-                    <label >Note ID</label>
-                    <input th:field="*{id}" type="text" readonly="true" class="form-control" id="id" placeholder="Note ID"/>
+                    <label hidden>Note ID</label>
+                    <input th:field="*{id}" type="hidden" readonly="true" class="form-control" id="id" placeholder="Note ID"/>
                     <br>
                     <label >Title</label>
                     <input th:field="*{title}" type="text" class="form-control" id="title" placeholder="Title"/>
                     <p th:each="error: ${#fields.errors('title')}"
                        th:text="${error}" class="error">Validation error</p>
+                    <p th:text="${message}" class="error">Validation error</p>
                     <br>
                     <label>Content</label>
                     <textarea th:field="*{text}" type="text" class="form-control" id="text" placeholder="Text" rows="7"/>

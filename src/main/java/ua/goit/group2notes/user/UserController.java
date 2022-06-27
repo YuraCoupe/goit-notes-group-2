@@ -1,6 +1,7 @@
 package ua.goit.group2notes.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,6 @@ public class UserController {
         List<UserDto> all = userService.getAll();
         model.addAttribute("users", all);
         return "userList";
-
     }
 
     @GetMapping("/edit/{id}")
@@ -80,7 +80,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/registration")
-    public String registerUser(@ModelAttribute("userDto") @Valid UserDto userDto, BindingResult bindingResult, Model model) {
+    public String registerUser(@ModelAttribute("userDto") @Valid UserDto userDto, BindingResult bindingResult, Model model, Authentication authentication) {
         if (bindingResult.hasErrors()) {
             return "registration";
         }
@@ -92,7 +92,11 @@ public class UserController {
             model.addAttribute("message", ex.getMessage());
             return "registration";
         }
-        return "login";
+        if (authentication == null) {
+            return "login";
+        } else {
+            return "users/list";
+        }
     }
 
     @ModelAttribute

@@ -63,7 +63,7 @@ public class NoteService {
     public void validateToCreateNote(NoteDto noteDto) {
         NoteDao note = converter.convert(noteDto);
         Optional<NoteDao> noteFromDb = noteRepository.findByTitle(note.getTitle());
-        if (noteFromDb.isPresent() & Objects.isNull(note.getTitle())) {
+        if (noteFromDb.isPresent() & Objects.isNull(note.getId())) {
             throw new TitleAlreadyExistsException("Title with username " + note.getTitle() + " already exists");
         }
     }
