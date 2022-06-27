@@ -2,6 +2,7 @@ package ua.goit.group2notes.user;
 
 import ua.goit.group2notes.note.NoteDto;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Set;
@@ -45,7 +46,7 @@ public class UserDto {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    @NotNull(message = "Please, choose Access Type")
     public UserRole getUserRole() {
         return userRole;
     }
