@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+
+<head th:insert="header">
+</head>
+<body>
+    <span th:insert="navibar::navibar"></span>
+        <div class="container">
+            <form action="/note/edit">
+                <div class="form-group">
+                    <label for="id">Note name:</label><br>
+                    <select class="form-control" id="id" name="id">
+                        <option value=""> -- select note -- </option>
+                        <option th:each="note : ${notes}" th:value="${note.id}" th:text="${note.title}"></option>
+                    </select>
+                </div>
+                    <input type="submit" value="Search">
+            </form><br>
+
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group me-2" role="group" aria-label="Second group">
+                   <a href="/note/create" type="button" class="btn btn-primary">New</a>
+                </div>
+            </div>
+            <div>
+                <span th:if="${errorMessage!=null and !errorMessage.empty}">
+                    <p th:each="error: ${errorMessage.errors}">
+                        <p style="color:red" th:text="${error}"></p>
+                    </p>
+                </span>
+            </div>
+
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <!--<td>id</td>-->
+                        <td>Title</td>
+                        <td>Text</td>
+                        <td>AccessType</td>
+                        <td>Actions</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="note: ${notes}">
+                        <!--<td th:text="${note.id}"/>-->
+                        <td th:text="${note.title}" style="max-width:7em"/>
+                        <td th:text="${note.text}" style="max-width:30em"/>
+                        <td th:text="${note.accessType.type}"/>
+                        <td>
+                            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                <div class="btn-group me-2" role="group" aria-label="Second group">
+                                    <a th:href="@{/note/edit/{id}(id=${note.id})}" type="button" class="btn btn-warning">Edit</a>
+                                    <a th:href="@{/note/delete/{id}(id=${note.id})}" type="button" class="btn btn-danger">Remove</a>
+                                    <button th:if=="${note.accessType.type.equals('PUBLIC')}" class="copyButton btn btn-info">Share</button>
+                                    <input class="linkToCopy" th:value="${share}+${note.id}" style="position: absolute; z-index: -999; opacity: 0;" />
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    <script>
+        $('button.copyButton').click(function(){
+        $(this).siblings('input.linkToCopy').select();
+        document.execCommand("copy");
+        });
+    </script>
+    </body>
+</html>
