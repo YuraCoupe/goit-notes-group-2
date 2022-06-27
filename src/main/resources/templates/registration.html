@@ -10,10 +10,11 @@
 <div th:insert="navibar::navibar"></div>
 <div class="container">
   <div class="row">
-    <div sec:authorize="hasRole('ROLE_ADMIN')">
+    <div>
       <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
         <div class="btn-group me-2" role="group" aria-label="Second group">
-          <a href="/users" type="button" class="btn btn-success">Back to users</a>
+          <a sec:authorize="hasRole('ROLE_ADMIN')" href="/users/list" type="button" class="btn btn-success">Back to users</a>
+          <a sec:authorize="isAnonymous()" href="/login" type="button" class="btn btn-info">Back to login</a>
         </div>
       </div>
     </div>
@@ -21,13 +22,14 @@
   <form action="/users/registration" th:object="${userDto}" method="post" modelAttribute="userDto">
     <div class="form-group">
       <div class="row">
-        <label >User ID</label>
-        <input th:field="*{id}" type="UUID" readonly="true" class="form-control" id="id" placeholder="User ID"/>
+        <label hidden>User ID</label>
+        <input th:field="*{id}" type="hidden" readonly="true" class="form-control" id="id" placeholder="User ID"/>
         <br>
         <label >Username</label>
         <input th:field="*{username}" type="text" class="form-control" id="username" placeholder="Username"/>
         <p th:each="error: ${#fields.errors('username')}"
            th:text="${error}" class="error">Validation error</p>
+        <p th:text="${message}" class="error">Validation error</p>
         <br>
         <label>Password</label>
         <input th:field="*{password}" type="password" class="form-control" id="password" placeholder="Password"/>
