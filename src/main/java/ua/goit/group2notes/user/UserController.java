@@ -31,7 +31,9 @@ public class UserController {
     public String listUsers(Model model) {
         List<UserDto> all = userService.getAll();
         model.addAttribute("users", all);
+
         return "userlist";
+
     }
 
     @GetMapping("/edit/{id}")
