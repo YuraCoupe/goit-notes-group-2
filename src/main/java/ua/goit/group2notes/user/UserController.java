@@ -97,7 +97,7 @@ public class UserController {
         if (authentication == null) {
             return "login";
         } else {
-            return "users/list";
+            return "redirect:/users/list";
         }
     }
 
