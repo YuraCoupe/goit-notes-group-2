@@ -17,7 +17,6 @@
         <thead>
         <tr>
             <td>User</td>
-            <!--<td>Password</td>-->
             <td>Role</td>
             <td>Actions</td>
         </tr>
@@ -25,7 +24,6 @@
         <tbody>
         <tr th:each="user: ${users}">
             <td th:text="${user.username}" style="max-width:7em"/>
-            <!--<td th:text="${user.password}" style="max-width:30em"/>-->
             <td th:text="${user.userRole}"/>
             <td>
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">

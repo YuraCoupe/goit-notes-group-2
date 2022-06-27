@@ -7,22 +7,13 @@
 <body>
     <span th:insert="navibar::navibar"></span>
         <div class="container">
-            <!--<form action="/note/edit">
-                <div class="form-group">
-                    <label for="id">Note name:</label><br>
-                    <select class="form-control" id="id" name="id">
-                        <option value=""> -- select note -- </option>
-                        <option th:each="note : ${notes}" th:value="${note.id}" th:text="${note.title}"></option>
-                    </select>
-                </div>
-                    <input type="submit" value="Search">
-            </form><br>-->
 
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="btn-group me-2" role="group" aria-label="Second group">
                    <a href="/note/create" type="button" class="btn btn-primary">New</a>
                 </div>
             </div>
+            <div th:text="${#lists.size(notes)} + ' notes'" style="float: right" >Notes number</div>
             <div>
                 <span th:if="${errorMessage!=null and !errorMessage.empty}">
                     <p th:each="error: ${errorMessage.errors}">
@@ -32,10 +23,9 @@
             </div>
 
 
-            <table class="table table-hover">
+            <table th:if=="${!notes.empty}" class="table table-hover">
                 <thead>
                     <tr>
-                        <!--<td>id</td>-->
                         <td>Title</td>
                         <td>Text</td>
                         <td>AccessType</td>
@@ -44,7 +34,6 @@
                 </thead>
                 <tbody>
                     <tr th:each="note: ${notes}">
-                        <!--<td th:text="${note.id}"/>-->
                         <td th:text="${note.title}" style="max-width:7em"/>
                         <td th:text="${note.text}" style="max-width:30em"/>
                         <td th:text="${note.accessType.type}"/>
