@@ -45,7 +45,7 @@ public class NoteDto {
         this.text = text;
     }
 
-    @NotNull(message = "The accessType cannot be empty")
+    @NotNull(message = "Please, choose Access Type")
     public NoteAccessType getAccessType() {
         return accessType;
     }
