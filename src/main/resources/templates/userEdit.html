@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+
+<head th:insert="header">
+</head>
+<body>
+<span th:insert="navibar::navibar"></span>
+<div class="container">
+
+    <form  th:action="@{/users/edit/{id}(id=${user.id})}" th:object="${user}" method="post" modelAttribute="user">
+        <div class="form-group">
+            <div class="row">
+                <label >User ID</label>
+                <input th:field="*{id}" type="text" readonly="true" class="form-control" id="id" placeholder="User ID"/>
+                <br>
+                <label >Username</label>
+                <input th:field="*{username}" type="text" class="form-control"  placeholder="Username"/>
+                <p th:each="error: ${#fields.errors('username')}"
+                   th:text="${error}" class="error">Validation error</p>
+                <br>
+                <label>Password</label>
+                <label>
+                    <input th:field="*{password}" type="text" class="form-control" placeholder="Password"/>
+                </label>
+                <p th:each="error : ${#fields.errors('password')}"
+                   th:text="${error}" class="error">Validation error</p>
+                <br>
+            </div>
+            <div class="row">
+                <label>User Role</label>
+                <select th:field="*{userRole}" name="userRole">
+                    <option value=""> -- select access type -- </option>
+                    <option th:each="value : ${T(ua.goit.group2notes.user.UserRole).values()}"
+                            th:value="${value}" th:text="${value}"></option>
+                </select>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group me-2" role="group" aria-label="Second group">
+                        <button type="submit" value="Submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
