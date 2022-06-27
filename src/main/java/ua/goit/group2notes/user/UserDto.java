@@ -46,7 +46,7 @@ public class UserDto {
     public void setPassword(String password) {
         this.password = password;
     }
-    @NotNull(message = "The accessType cannot be empty")
+    @NotNull(message = "Please, choose User Role")
     public UserRole getUserRole() {
         return userRole;
     }
