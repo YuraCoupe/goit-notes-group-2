@@ -14,7 +14,7 @@
       <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
         <div class="btn-group me-2" role="group" aria-label="Second group">
           <a sec:authorize="hasRole('ROLE_ADMIN')" href="/users" type="button" class="btn btn-success">Back to users</a>
-          <a href="/login" type="button" class="btn btn-info">Back to login</a>
+          <a sec:authorize="isAnonymous()" href="/login" type="button" class="btn btn-info">Back to login</a>
         </div>
       </div>
     </div>

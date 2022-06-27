@@ -12,20 +12,21 @@
         <thead>
         <tr>
             <td>User</td>
-            <td>Password</td>
-            <td>AccessType</td>
+            <!--<td>Password</td>-->
+            <td>Role</td>
+            <td>Actions</td>
         </tr>
         </thead>
         <tbody>
         <tr th:each="user: ${users}">
             <td th:text="${user.username}" style="max-width:7em"/>
-            <td th:text="${user.password}" style="max-width:30em"/>
+            <!--<td th:text="${user.password}" style="max-width:30em"/>-->
             <td th:text="${user.userRole}"/>
             <td>
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group me-2" role="group" aria-label="Second group">
+                        <a th:href="@{/users/edit/{id}(id=${user.id})}" type="button" class="btn btn-warning">Edit</a>
                         <a th:href="@{/users/delete/{id}(id=${user.id})}" type="button" class="btn btn-danger">Remove</a>
-                        <a th:href="@{/users/edit/{id}(id=${user.id})}" type="button" class="btn btn-danger">Edit</a>
                     </div>
                 </div>
             </td>

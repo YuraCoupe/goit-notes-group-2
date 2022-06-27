@@ -11,31 +11,27 @@
     <form  th:action="@{/users/edit/{id}(id=${user.id})}" th:object="${user}" method="post" modelAttribute="user">
         <div class="form-group">
             <div class="row">
-                <label >User ID</label>
-                <input th:field="*{id}" type="text" readonly="true" class="form-control" id="id" placeholder="User ID"/>
+                <label hidden>User ID</label>
+                <input th:field="*{id}" type="hidden" readonly="true" class="form-control" id="id" placeholder="User ID"/>
                 <br>
-                <label >Username</label>
+                <label>Username</label>
                 <input th:field="*{username}" type="text" class="form-control"  placeholder="Username"/>
                 <p th:each="error: ${#fields.errors('username')}"
                    th:text="${error}" class="error">Validation error</p>
                 <br>
                 <label>Password</label>
-                <label>
-                    <input th:field="*{password}" type="text" class="form-control" placeholder="Password"/>
-                </label>
+                <input th:field="*{password}" type="text" class="form-control" placeholder="Password"/>
                 <p th:each="error : ${#fields.errors('password')}"
                    th:text="${error}" class="error">Validation error</p>
                 <br>
-            </div>
-            <div class="row">
                 <label>User Role</label>
-                <select th:field="*{userRole}" name="userRole">
+                <select th:field="*{userRole}" name="userRole" class="form-control" >
                     <option value=""> -- select access type -- </option>
                     <option th:each="value : ${T(ua.goit.group2notes.user.UserRole).values()}"
                             th:value="${value}" th:text="${value}"></option>
                 </select>
+                <br>
             </div>
-            <br>
 
             <div class="row">
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">

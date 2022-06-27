@@ -31,7 +31,9 @@ public class UserController {
     public String listUsers(Model model) {
         List<UserDto> all = userService.getAll();
         model.addAttribute("users", all);
-        return "userList";
+
+        return "userlist";
+
     }
 
     @GetMapping("/edit/{id}")
@@ -39,7 +41,7 @@ public class UserController {
         UserDto user = userService.getUserById(id);
         user.setPassword("Enter your password");
         model.put("user", user);
-        return "userEdit";
+        return "useredit";
     }
 
     @PostMapping("/edit/{id}")
@@ -48,7 +50,7 @@ public class UserController {
         UserDto user = userService.getUserById(id);
         if (bindingResult.hasErrors()) {
             model.put("user", userDto);
-            return "userEdit";
+            return "useredit";
         }
         user.setUsername(userDto.getUsername());
         if (!userDto.getPassword().equals("Enter your password")) {
