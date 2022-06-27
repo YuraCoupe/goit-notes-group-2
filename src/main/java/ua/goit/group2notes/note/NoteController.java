@@ -43,19 +43,19 @@ public class NoteController {
         String shareUrl = requestUrl.replace("list", "share/");
         model.put("share", shareUrl);
 
-        return "notes";
+        return "noteslist";
     }
 
     @GetMapping("/create")
     public String noteCreate(Model model) {
         model.addAttribute("note", new NoteDto());
-        return "note";
+        return "noteform";
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public String noteAdd(Authentication authentication, @ModelAttribute("note")@Valid NoteDto noteDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "note";
+            return "noteform";
         }
         try {
             UserDto userDto = userService.findUserByUsername(authentication.getName());
@@ -63,7 +63,7 @@ public class NoteController {
             noteService.createNote(noteDto);
         } catch (TitleAlreadyExistsException ex) {
             model.addAttribute("message", ex.getMessage());
-            return "note";
+            return "noteform";
         }
         return "redirect:/note/list";
     }
@@ -73,7 +73,7 @@ public class NoteController {
 
         NoteDto noteDto = noteService.findById(id);
         model.put("note", noteDto);
-        return "note";
+        return "noteform";
     }
 
     @GetMapping("/edit")
@@ -82,7 +82,7 @@ public class NoteController {
         UUID uuid = UUID.fromString(id);
         NoteDto noteDto = noteService.findById(uuid);
         model.put("note", noteDto);
-        return "note";
+        return "noteform";
     }
 
     /*@PostMapping("/edit/{id}")
@@ -109,7 +109,6 @@ public class NoteController {
         return "redirect:/note/list";
 
     }
-
 
     @GetMapping("share/{id}")
     public String noteShow(Authentication authentication, @PathVariable String id, Map<String, Object> model) {
