@@ -47,15 +47,15 @@ public class NoteController {
     }
 
     @GetMapping("/create")
-    public String noteCreate(Model model) {
+    public String noteCreateForm(Model model) {
         model.addAttribute("note", new NoteDto());
-        return "noteform";
+        return "notecreateform";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping("/create")
     public String noteAdd(Authentication authentication, @ModelAttribute("note")@Valid NoteDto noteDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "noteform";
+            return "notecreateform";
         }
         try {
             UserDto userDto = userService.findUserByUsername(authentication.getName());
@@ -63,17 +63,33 @@ public class NoteController {
             noteService.createNote(noteDto);
         } catch (TitleAlreadyExistsException ex) {
             model.addAttribute("message", ex.getMessage());
-            return "noteform";
+            return "notecreateform";
+        }
+        return "redirect:/note/list";
+    }
+
+    @PostMapping("/edit")
+    public String noteEdit(Authentication authentication, @ModelAttribute("note")@Valid NoteDto noteDto, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "noteeditform";
+        }
+        try {
+            UserDto userDto = userService.findUserByUsername(authentication.getName());
+            noteDto.setUser(userDto);
+            noteService.createNote(noteDto);
+        } catch (TitleAlreadyExistsException ex) {
+            model.addAttribute("message", ex.getMessage());
+            return "noteeditform";
         }
         return "redirect:/note/list";
     }
 
     @GetMapping("/edit/{id}")
-    public String noteEdit(@PathVariable("id") UUID id, Map<String, Object> model) {
+    public String noteEditForm(@PathVariable("id") UUID id, Map<String, Object> model) {
 
         NoteDto noteDto = noteService.findById(id);
         model.put("note", noteDto);
-        return "noteform";
+        return "noteeditform";
     }
 
     @GetMapping("/edit")
@@ -82,25 +98,8 @@ public class NoteController {
         UUID uuid = UUID.fromString(id);
         NoteDto noteDto = noteService.findById(uuid);
         model.put("note", noteDto);
-        return "noteform";
+        return "noteeditform";
     }
-
-    /*@PostMapping("/edit/{id}")
-    public String notePostEdit(@PathVariable("id") UUID id, @ModelAttribute("note") @Valid NoteDto noteDto, BindingResult bindingResult,Map<String, Object> model) {
-
-        NoteDto note = noteService.findById(id);
-        if (bindingResult.hasErrors()) {
-            model.put("note", noteDto);
-            return "noteEdit";
-        }
-        note.setTitle(noteDto.getTitle());
-        note.setText(noteDto.getText());
-        note.setAccessType(noteDto.getAccessType());
-        noteService.createNote(note);
-        return "redirect:/note/list";
-
-    }
-     */
 
     @GetMapping("delete/{id}")
     public String deleteNote(@PathVariable UUID id) {
