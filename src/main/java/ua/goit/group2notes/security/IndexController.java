@@ -10,14 +10,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(path = "/")
 public class IndexController {
 
+    @GetMapping(path = "/**")
+    public String getNotesPage() {
+        return "redirect:/note/list";
+    }
+
+    @PostMapping(path = "/**")
+    public String getNotes() {
+        return "redirect:/note/list";
+    }
+
     @GetMapping(path = "/index")
     public String getIndexPage() {
-        return "index";
+        return "redirect:/note/list";
     }
 
     @PostMapping(path = "/index")
     public String getIndex() {
-        return "index";
+        return "redirect:/note/list";
     }
 
     @GetMapping("/login")

@@ -1,50 +1,62 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Registration</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2016/bootsnav/bootsnav.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://bootstraptema.ru/plugins/2016/bootsnav/bootsnav.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="/css/style.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<head th:insert="header">
 </head>
+
 <body>
+
+<div th:insert="navibar::navibar"></div>
 <div class="container">
-  <div class="col-md-offset-3 col-md-6">
-  <div class="login-register-form">
-    <h2 class="form-signin-heading">Create your account</h2>
-
-
-    <div class="form-group">
-      <label for="username" class="form-label mt-4">Username</label>
-      <input type="text" name="username" class="form-control" id="username"
-             placeholder="Enter username contains only latin symbols">
-    </div>
-    <span class="usernameErrorField" style="color:red"></span>
-
-    <div class="form-group">
-      <label for="password" class="form-label mt-4">Password</label>
-      <input type="text" name="password" class="form-control" id="password"
-             placeholder="Enter password">
-    </div>
-    <span class="passwordErrorField" style="color:red"></span>
-
-    <div class="form-group">
-      <div class="form-label mt-4">
-        <div class="d-grid gap-2">
-          <button class="btn btn-lg btn-primary" onclick="sendToUser()">SIGN UP</button>
+  <div class="row">
+    <div>
+      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group me-2" role="group" aria-label="Second group">
+          <a sec:authorize="hasRole('ROLE_ADMIN')" href="/users/list" type="button" class="btn btn-success">Back to users</a>
+          <a sec:authorize="isAnonymous()" href="/login" type="button" class="btn btn-info">Back to login</a>
         </div>
       </div>
     </div>
-    <h5 class="text-center"><a href="/login">Return to Login page</a>
-    </h5>
-  </div>
-</div>
+  </div><br>
+  <form action="/users/registration" th:object="${userDto}" method="post" modelAttribute="userDto">
+    <div class="form-group">
+      <div class="row">
+        <label hidden>User ID</label>
+        <input th:field="*{id}" type="hidden" readonly="true" class="form-control" id="id" placeholder="User ID"/>
+        <br>
+        <label >Username</label>
+        <input th:field="*{username}" type="text" class="form-control" id="username" placeholder="Username"/>
+        <p th:each="error: ${#fields.errors('username')}"
+           th:text="${error}" class="error">Validation error</p>
+        <p th:text="${message}" class="error">Validation error</p>
+        <br>
+        <label>Password</label>
+        <input th:field="*{password}" type="password" class="form-control" id="password" placeholder="Password"/>
+        <p th:each="error : ${#fields.errors('password')}"
+           th:text="${error}" class="error">Validation error</p>
+        <br>
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+          <label>Role</label>
+          <select th:field="*{userRole}" class="form-control" >
+            <th:if test="${empty user.userRole}"><option value="" label="-- select role --"/></th:if>
+            <option th:value="ROLE_USER" th:text="User"></option>
+            <option th:value="ROLE_ADMIN" th:text="Admin"></option>
+          </select><br>
+          <p th:each="error : ${#fields.errors('userRole')}"
+             th:text="${error}" class="error">Validation error</p>
+          <br>
+        </div>
+      </div>
+      <div class="row">
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+          <div class="btn-group me-2" role="group" aria-label="Second group">
+            <button type="submit" value="Submit" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>
 </body>
-<script src="/js/ValidUser.js"></script>
 </html>

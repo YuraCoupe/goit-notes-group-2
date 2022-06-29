@@ -2,6 +2,8 @@ package ua.goit.group2notes.note;
 
 import ua.goit.group2notes.user.UserDto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.UUID;
 
@@ -23,7 +25,7 @@ public class NoteDto {
         this.id = id;
     }
 
-//    @NotEmpty(message = "Please, enter Title")
+    @NotEmpty(message = "Please, enter Title")
     @Size(min = 5, max = 100, message = "Title must be minimum 5 characters long and no longer then 100")
     public String getTitle() {
         return title;
@@ -33,7 +35,7 @@ public class NoteDto {
         this.title = title;
     }
 
-//    @NotEmpty(message = "Please, enter Text")
+    @NotEmpty(message = "Please, enter Text")
     @Size(min = 5, max = 10000, message = "Text must be minimum 5 characters long and no longer then 10000")
     public String getText() {
         return text;
@@ -43,6 +45,7 @@ public class NoteDto {
         this.text = text;
     }
 
+    @NotNull(message = "Please, choose Access Type")
     public NoteAccessType getAccessType() {
         return accessType;
     }
