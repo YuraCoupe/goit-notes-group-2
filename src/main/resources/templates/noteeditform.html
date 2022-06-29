@@ -33,7 +33,6 @@
                     <br>
                     <label>Access type</label>
                     <select th:field="*{accessType}" class="form-control" id="accessType" name="accessType">
-                        <option value=""> -- select access type -- </option>
                         <option th:each="value : ${T(ua.goit.group2notes.note.NoteAccessType).values()}"
                                 th:value="${value}" th:text="${value}"></option>
                     </select>
